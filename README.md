@@ -9,6 +9,8 @@ $ <query> john.applessed@apple.com
 john.applessed@apple.com:toto123
 ```
 
+The total number of unique records in the final dataset (Collection 1 to 5 + AntiPublic + Breach Compilation) is around 3.72 billions (_3,372,591,561_ to be precise).
+
 
 ### Set Up
 
