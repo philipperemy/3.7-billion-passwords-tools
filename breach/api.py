@@ -1,6 +1,7 @@
 import os
 import random
 import shutil
+import string
 import subprocess
 from glob import glob
 from pathlib import Path
@@ -10,7 +11,7 @@ from tqdm import tqdm
 from breach.parser import parse_to_files
 from breach.query import QueryAPI, get_query_manager
 from breach.splitter import get_output_file, write_line_to_file
-from breach.utils import alpha_num_lookup, shuffle, read_lines
+from breach.utils import alpha_num_lookup, shuffle, read_lines, create_dir_for_file
 
 
 class API:
@@ -118,6 +119,16 @@ class API:
                 print(f'File size: {f.stat().st_size / 1e6:.2f} Mb. ' + ' '.join(cmd))
                 subprocess.check_output(cmd)
                 f.unlink()
+
+    @staticmethod
+    def filter_lines(file, out, less_than, more_than):
+        create_dir_for_file(out)
+        with open(out, 'w', encoding='utf8') as w:
+            with open(file, 'r', encoding='utf8', errors='ignore') as r:
+                for line in r:
+                    line2 = ''.join(list(filter(lambda x: x in string.printable, line)))
+                    if less_than <= len(line2.strip()) <= more_than:
+                        w.write(line2)
 
 
 def find_files(path: str):

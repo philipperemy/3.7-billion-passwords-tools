@@ -4,7 +4,6 @@ from pathlib import Path
 import click
 
 from breach.api import API
-from breach.query import DATASET_CHOICES
 from breach.splitter import split_file
 from breach.utils import Ct, num_open_files_limit
 
@@ -97,6 +96,15 @@ def merge(src: str, dest: str):
 @click.option('--new', required=True, type=Ct.input_dir())
 def evaluate(old: str, new: str):
     API.evaluate(old, new)
+
+
+@cli.command(short_help='Filters lines less than N and more than M.')
+@click.option('--file', required=True, type=Ct.input_file())
+@click.option('--out', required=True, type=Ct.output_file())
+@click.option('--less_than', required=True, type=int)
+@click.option('--more_than', required=True, type=int)
+def filter_lines(file: str, out: str, less_than: int, more_than: int):
+    API.filter_lines(file, out, less_than, more_than)
 
 
 if __name__ == '__main__':
