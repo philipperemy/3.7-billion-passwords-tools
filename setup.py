@@ -1,7 +1,7 @@
 import sys
 
-from Cython.Build import cythonize
 from setuptools import setup, find_packages
+from Cython.Build import cythonize
 
 if sys.version_info < (3, 6):
     raise Exception('Must be using Python 3.6 or above.')
